@@ -8,6 +8,8 @@ module.exports = {
                 return true;
             }
             return false;
+        } else if(typeof input == "number"){
+                return isNaN(val);
         }
     }
 }

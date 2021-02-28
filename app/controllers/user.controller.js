@@ -7,26 +7,8 @@ exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
 };
 
-exports.userBoard = (req, res) => {
+exports.listUser = (req, res) => {
   console.log(req.query);
-  // User.find()
-  // let query = {
-  //   $OR : [
-  //     {
-  //       "fName" : req.body.fName,
-  //       "lName" : req.body.lName,
-  //       "empId" : req.body.empId
-  //     },
-  //     {
-
-  //     }
-  //   ]
-  //   "fName" : req.body.fName,
-  //   "lName" : req.body.lName,
-  //   "email" : req.body.email,
-  //   "empId" : req.body.empId
-  // }
-  
   let query = {}
 
   if(!validation.isEmpty(req.query.fName)){
@@ -38,44 +20,46 @@ exports.userBoard = (req, res) => {
   if(!validation.isEmpty(req.query.empId)){
     query.empId = req.query.empId
   }
-  
-  //   "fName" : req.query.fName,
-  //   "lName" : req.query.lName,
-  //   "empId" : req.query.empId
-  // }
-  // let sort = {
 
-  // }
-  // User.findOne({
-  //   email: req.body.email
-  // }).exec((err, user) => {
-  //   if (err) {
-  //     res.status(500).send({ message: err });
-  //     return;
-  //   }
-  Employee.find(query)
-    .sort({fName: 1, lName: 1, email: 1, empId: 1, orgName :1})
-    .exec((err, empData) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      console.log(JSON.stringify(empData));
-      // res.status(200).send({
-      //   id: user._id,
-      //   email: user.email,
-      //   accessToken: token
-      // });
-      res.status(200).send(empData);
-    })
+  const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? page * limit : 0;
+    let pageObj ={
+      "limit": limit,
+      "offset": offset
+    }
+    return pageObj;
+  };
+  const page = req.query.page;
+  const size = req.query.size;
+  const options = {}
+  if(!validation.isEmpty(size)){
+    let pgObj = getPagination(page, size);
+    options.offset = pgObj.offset;
+    options.limit = pgObj.limit;
+  }
+  options.sort =  {
+                    fName: 1, 
+                    lName: 1, 
+                    email: 1, 
+                    empId: 1, 
+                    orgName : 1
+                  }
+
+  Employee.paginate(query,options)
+  .then((data) => {
+    res.status(200).send({
+      totalItems: data.totalDocs,
+      empDtls: data.docs,
+      totalPages: data.totalPages,
+      currentPage: data.page - 1,
+    });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving tutorials.",
+    });
+  });
 };
 
-
-
-exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
-};
-
-exports.moderatorBoard = (req, res) => {
-  res.status(200).send("Moderator Content.");
-};
