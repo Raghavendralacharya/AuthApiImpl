@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "89000b5f-0ef9-417f-bffa-99127fbf1a2e",
+		"name": "antarcticatest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/auth/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fName\": \"Raghav\",\n  \"lName\": \"Acharya\",\n  \"email\": \"raghavendralacharya@gmail.com\",\n  \"password\": \"raghav@2496\",\n  \"empId\": \"24\",\n  \"orgName\": \"Pratishthan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/auth/signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"raghavendralacharya@gmail.com\",\n  \"password\": \"raghav@2496\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/test/user?fName=&lName=Acharya&empId=&page=0&size=6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2I2OWY1YzA1ZTFlZGVmOTgzNzk4NCIsImlhdCI6MTYxNDUwNjUyOSwiZXhwIjoxNjE0NTkyOTI5fQ.BQJA5_-glWHPz-J9eSO1jMdmXXyA2NTaw9oYeXamLmc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/test/listuser?fName=&lName=Acharya&empId=&size=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test",
+						"listuser"
+					],
+					"query": [
+						{
+							"key": "fName",
+							"value": ""
+						},
+						{
+							"key": "lName",
+							"value": "Acharya"
+						},
+						{
+							"key": "empId",
+							"value": ""
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
