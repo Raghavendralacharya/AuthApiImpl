@@ -31,5 +31,7 @@ steps:
             
         page param is the which page data to be fetched and size param is how many record should be there in a page.
         access token has to be passed in the key field "x-access-token"
+        
+4. Code base uses the mognodb to store the data.
 
         
